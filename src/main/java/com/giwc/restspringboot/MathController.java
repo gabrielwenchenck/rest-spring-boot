@@ -1,5 +1,6 @@
 package com.giwc.restspringboot;
 
+import com.giwc.restspringboot.exceptions.UnsupportedMathOperationException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.concurrent.atomic.AtomicLong;
@@ -16,16 +17,21 @@ public class MathController {
     ) throws Exception {
 
         if (!isNumeric(numberOne) || !isNumeric(numberTwo)) {
-            throw new Exception();
+            throw new UnsupportedMathOperationException("Please set a numeric value");
         }
         return convertToDouble(numberOne) + convertToDouble(numberTwo);
     }
 
     private Double convertToDouble(String strNumber) {
-        return null;
+        if (strNumber == null) return 0D;
+        String number = strNumber.replaceAll(",", ".");
+        if (isNumeric(number)) return Double.parseDouble(number);
+        return 0D;
     }
 
-    private boolean isNumeric(String numberOne) {
-        return false;
+    private boolean isNumeric(String strNumber) {
+        if (strNumber == null) return false;
+        String number = strNumber.replaceAll(",", ".");
+        return number.matches("[-+]?[0-9]*\\.?[0-9]+");
     }
 }
