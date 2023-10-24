@@ -1,8 +1,10 @@
 package com.giwc.restspringboot.services;
 
 import com.giwc.restspringboot.data.vo.v1.PersonVO;
+import com.giwc.restspringboot.data.vo.v2.PersonVOV2;
 import com.giwc.restspringboot.exceptions.ResourceNotFoundException;
 import com.giwc.restspringboot.mapper.DozerMapper;
+import com.giwc.restspringboot.mapper.custom.PersonMapper;
 import com.giwc.restspringboot.model.Person;
 import com.giwc.restspringboot.repositories.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,8 @@ public class PersonServices {
 
     @Autowired
     PersonRepository repository;
+    @Autowired
+    PersonMapper mapper;
 
     public List<PersonVO> findAll() {
 
@@ -40,6 +44,15 @@ public class PersonServices {
 
         var entity = DozerMapper.parseObject(person, Person.class);
         var vo = DozerMapper.parseObject(repository.save(entity), PersonVO.class);
+        return vo;
+    }
+
+    public PersonVOV2 createV2(PersonVOV2 person) {
+
+        logger.info("Creating one person with V2!");
+
+        var entity = mapper.convertVoToEntity(person);
+        var vo = mapper.convertEntityToVo(repository.save(entity));
         return vo;
     }
 

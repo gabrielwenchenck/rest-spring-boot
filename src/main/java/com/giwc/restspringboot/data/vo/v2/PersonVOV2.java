@@ -1,12 +1,13 @@
-package com.giwc.restspringboot.data.vo.v1;
+package com.giwc.restspringboot.data.vo.v2;
 
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Objects;
 
 
-public class PersonVO implements Serializable {
+public class PersonVOV2 implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -22,8 +23,9 @@ public class PersonVO implements Serializable {
     private String address;
 
     private String gender;
+    private Date birthDate;
 
-    public PersonVO() {
+    public PersonVOV2() {
     }
 
     public Long getId() {
@@ -66,16 +68,23 @@ public class PersonVO implements Serializable {
         this.gender = gender;
     }
 
+    public Date getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
+    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof PersonVO person)) return false;
-        return Objects.equals(getId(), person.getId()) && Objects.equals(getFirstName(), person.getFirstName()) && Objects.equals(getLastName(), person.getLastName()) && Objects.equals(getAddress(), person.getAddress()) && Objects.equals(getGender(), person.getGender());
+        if (!(o instanceof PersonVOV2 that)) return false;
+        return Objects.equals(getId(), that.getId()) && Objects.equals(getFirstName(), that.getFirstName()) && Objects.equals(getLastName(), that.getLastName()) && Objects.equals(getAddress(), that.getAddress()) && Objects.equals(getGender(), that.getGender()) && Objects.equals(getBirthDate(), that.getBirthDate());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getFirstName(), getLastName(), getAddress(), getGender());
+        return Objects.hash(getId(), getFirstName(), getLastName(), getAddress(), getGender(), getBirthDate());
     }
 }
